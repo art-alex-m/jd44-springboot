@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -31,21 +32,18 @@ class AuthorizationControllerTest {
     @Test
     public void whenInvalidCredentials_thenStatusBadRequest() {
         String url = "http://localhost:" + port + "/authorize?user=&password=";
-        String message = "Test message";
-        Mockito.when(authorizationService.getAuthorities(Mockito.anyString(), Mockito.anyString()))
-                .thenThrow(new InvalidCredentialsException(message));
 
-        ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<ErrorPair[]> result = restTemplate.getForEntity(url, ErrorPair[].class);
 
         assertThat(result.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
-        assertThat(result.getBody(), equalTo(message));
+        assertThat(result.getBody(), arrayWithSize(2));
     }
 
     @Test
     public void whenUnauthorizedUser_thenStatusUnauthorized() {
         String url = "http://localhost:" + port + "/authorize?user=user&password=password";
         String message = "Test message";
-        Mockito.when(authorizationService.getAuthorities(Mockito.anyString(), Mockito.anyString()))
+        Mockito.when(authorizationService.getAuthorities(Mockito.any()))
                 .thenThrow(new UnauthorizedUserException(message));
 
         ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);

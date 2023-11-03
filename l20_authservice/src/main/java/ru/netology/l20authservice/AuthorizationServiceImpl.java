@@ -10,22 +10,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public List<Authorities> getAuthorities(String user, String password) {
-        if (isEmpty(user) || isEmpty(password)) {
-            throw new InvalidCredentialsException("User name or password is empty");
-        }
-
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+    public List<Authorities> getAuthorities(User user) {
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user.getUser(), user.getPassword());
 
         if (isEmpty(userAuthorities)) {
             throw new UnauthorizedUserException("Unknown user " + user);
         }
 
         return userAuthorities;
-    }
-
-    private boolean isEmpty(String str) {
-        return str == null || str.isEmpty();
     }
 
     private boolean isEmpty(List<?> str) {

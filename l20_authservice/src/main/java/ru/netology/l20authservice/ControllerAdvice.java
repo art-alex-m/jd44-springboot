@@ -3,18 +3,30 @@ package ru.netology.l20authservice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @RestControllerAdvice
 public class ControllerAdvice {
     private final Logger logger = LoggerFactory.getLogger(ControllerAdvice.class);
 
-    @ExceptionHandler(InvalidCredentialsException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleInvalidCredentialsException(RuntimeException ex) {
-        return ex.getMessage();
+    public List<ErrorPair> handleInvalidCredentialsException(MethodArgumentNotValidException ex) {
+        List<ErrorPair> errors = new LinkedList<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.add(new ErrorPair(fieldName, errorMessage));
+        });
+
+        return errors;
     }
 
     @ExceptionHandler(UnauthorizedUserException.class)

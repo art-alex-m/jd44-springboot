@@ -1,7 +1,7 @@
 package ru.netology.l20authservice;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,10 +15,7 @@ public class AuthorizationController {
     }
 
     @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(
-            @RequestParam("user") String user,
-            @RequestParam("password") String password
-    ) {
-        return authorizationService.getAuthorities(user, password);
+    public List<Authorities> getAuthorities(@Validated User user) {
+        return authorizationService.getAuthorities(user);
     }
 }
