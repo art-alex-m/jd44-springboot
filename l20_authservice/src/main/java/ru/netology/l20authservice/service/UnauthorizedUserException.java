@@ -1,4 +1,4 @@
-package ru.netology.l20authservice;
+package ru.netology.l20authservice.service;
 
 public class UnauthorizedUserException extends RuntimeException {
     public UnauthorizedUserException(String msg) {

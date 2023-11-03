@@ -1,4 +1,4 @@
-package ru.netology.l20authservice;
+package ru.netology.l20authservice.model;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

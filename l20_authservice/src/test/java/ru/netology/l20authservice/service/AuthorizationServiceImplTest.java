@@ -1,4 +1,4 @@
-package ru.netology.l20authservice;
+package ru.netology.l20authservice.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -6,6 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
+import ru.netology.l20authservice.model.Authorities;
+import ru.netology.l20authservice.model.User;
+import ru.netology.l20authservice.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.Stream;

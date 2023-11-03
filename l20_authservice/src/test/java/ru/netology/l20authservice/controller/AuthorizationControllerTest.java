@@ -1,4 +1,4 @@
-package ru.netology.l20authservice;
+package ru.netology.l20authservice.controller;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -9,6 +9,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import ru.netology.l20authservice.model.ErrorPair;
+import ru.netology.l20authservice.service.AuthorizationService;
+import ru.netology.l20authservice.service.UnauthorizedUserException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
